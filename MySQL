@@ -1,6 +1,0 @@
-CREATE DATABASE statusCodesDB;
-CREATE TABLE Responses (
-    URL varchar(255),
-    Method ENUM('GET','PUT','POST','DELETE'),
-    ResponseCode int
-);
