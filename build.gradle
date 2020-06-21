@@ -20,4 +20,5 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.13'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.13'
     compile group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0'
 }

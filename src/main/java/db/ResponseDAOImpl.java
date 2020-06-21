@@ -20,7 +20,7 @@ public class ResponseDAOImpl implements ResponseDAO {
     private static final Logger logger = LoggerFactory.getLogger(ResponseDAOImpl.class);
 
     @Override
-    public boolean createResponseRecord(ResponseEntity entity) { // todo add Logger -> Sl4j + logger (Logback ...) and add transactions (commit,rollback strategy)
+    public boolean createResponseRecord(ResponseEntity entity) {
         logger.info("Create response record with {}", entity);
         try (Connection connection = getConnection()) {
             boolean success;

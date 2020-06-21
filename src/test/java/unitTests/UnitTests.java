@@ -1,3 +1,5 @@
+package unitTests;
+
 import api.ResponseDTO;
 import com.github.javafaker.Faker;
 import db.ResponseDAOImpl;
@@ -13,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UnitTests {
+public class UnitTests {  //H2 in-memory  SQL database setup and run tests
 
     private ResponseService service = new ResponseServiceImpl(new ResponseDAOImpl());
     private Faker faker = new Faker();

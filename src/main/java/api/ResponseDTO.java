@@ -27,32 +27,36 @@ public class ResponseDTO {
         return url;
     }
 
-    public void setUrl(String url) {
+    public ResponseDTO setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public int getResponseCode() {
         return responseCode;
     }
 
-    public void setResponseCode(int responseCode) {
+    public ResponseDTO setResponseCode(int responseCode) {
         this.responseCode = responseCode;
+        return this;
     }
 
     public String getResponseBody() {
         return responseBody;
     }
 
-    public void setResponseBody(String responseBody) {
+    public ResponseDTO setResponseBody(String responseBody) {
         this.responseBody = responseBody;
+        return this;
     }
 
     public String getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public ResponseDTO setMethod(String method) {
         this.method = method;
+        return this;
     }
 
 }
