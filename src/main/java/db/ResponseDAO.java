@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface ResponseDAO {
 
-    boolean createResponseRecord(ResponseEntity entity);
+    OperationResult createResponseRecord(ResponseEntity entity);
 
-    boolean updateResponseRecord(ResponseEntity entity);
+    OperationResult updateResponseRecord(ResponseEntity entity);
 
-    boolean deleteResponseRecord(String url, Methods method);
+    OperationResult deleteResponseRecord(String url, Methods method);
 
     Optional<ResponseEntity> getResponseRecord(String url, Methods method);
 

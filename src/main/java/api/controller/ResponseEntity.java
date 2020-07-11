@@ -24,4 +24,11 @@ public class ResponseEntity {
         return responseBody;
     }
 
+    @Override
+    public String toString() {
+        return "ResponseEntity{" +
+                "responseCode=" + responseCode +
+                ", responseBody='" + responseBody + '\'' +
+                '}';
+    }
 }

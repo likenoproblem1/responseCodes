@@ -3,7 +3,6 @@ package unitTests;
 import api.ResponseDTO;
 import com.github.javafaker.Faker;
 import db.ResponseDAOImpl;
-
 import db.entity.Methods;
 import db.entity.ResponseEntity;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,16 +14,17 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UnitTests {  //H2 in-memory  SQL database setup and run tests
+public class UnitTests {
 
     private ResponseService service = new ResponseServiceImpl(new ResponseDAOImpl());
     private Faker faker = new Faker();
+
 
     @ParameterizedTest
     @EnumSource(Methods.class)
     public void createRecordTest(Methods method) {
         ResponseDTO responseDTO = new ResponseDTO(faker.animal().name(), faker.random().nextInt(600), faker.gameOfThrones().character(), method.name());
-        assertTrue(service.createResponse(responseDTO));
+        assertTrue(service.createResponse(responseDTO).isSuccessful());
         assertNotEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
         service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod());
     }
@@ -33,9 +33,9 @@ public class UnitTests {  //H2 in-memory  SQL database setup and run tests
     @EnumSource(Methods.class)
     public void createSameRecordTest(Methods method) {
         ResponseDTO responseDTO = new ResponseDTO(faker.animal().name(), faker.random().nextInt(600), faker.gameOfThrones().character(), method.name());
-        assertTrue(service.createResponse(responseDTO));
+        assertTrue(service.createResponse(responseDTO).isSuccessful());
         assertNotEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
-        assertFalse(service.createResponse(responseDTO));
+        assertFalse(service.createResponse(responseDTO).isSuccessful());
         service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod());
     }
 
@@ -44,8 +44,8 @@ public class UnitTests {  //H2 in-memory  SQL database setup and run tests
     public void updateRecordTest(Methods method) {
         ResponseDTO responseDTO = new ResponseDTO(faker.animal().name(), faker.random().nextInt(600), faker.gameOfThrones().character(), method.name());
         ResponseDTO updateDTO = new ResponseDTO(responseDTO.getUrl(), faker.random().nextInt(600), faker.gameOfThrones().character(), responseDTO.getMethod());
-        assertTrue(service.createResponse(responseDTO));
-        assertTrue(service.updateResponse(updateDTO));
+        assertTrue(service.createResponse(responseDTO).isSuccessful());
+        assertTrue(service.updateResponse(updateDTO).isSuccessful());
         Optional<ResponseEntity> response = service.getResponse(responseDTO.getUrl(), responseDTO.getMethod());
         assertTrue(response.isPresent());
         assertEquals(response.get().getResponseCode(), updateDTO.getResponseCode());
@@ -57,9 +57,9 @@ public class UnitTests {  //H2 in-memory  SQL database setup and run tests
     @EnumSource(Methods.class)
     public void deleteRecordTest(Methods method) {
         ResponseDTO responseDTO = new ResponseDTO(faker.animal().name(), faker.random().nextInt(600), faker.gameOfThrones().character(), method.name());
-        assertTrue(service.createResponse(responseDTO));
+        assertTrue(service.createResponse(responseDTO).isSuccessful());
         assertNotEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
-        assertTrue(service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod()));
+        assertTrue(service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod()).isSuccessful());
         assertEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
     }
 
@@ -68,7 +68,7 @@ public class UnitTests {  //H2 in-memory  SQL database setup and run tests
     public void getRecordTest(Methods method) {
         ResponseDTO responseDTO = new ResponseDTO(faker.animal().name(), faker.random().nextInt(600), faker.gameOfThrones().character(), method.name());
         assertEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
-        assertTrue(service.createResponse(responseDTO));
+        assertTrue(service.createResponse(responseDTO).isSuccessful());
         assertNotEquals(service.getResponse(responseDTO.getUrl(), responseDTO.getMethod()), Optional.empty());
         service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod());
     }
