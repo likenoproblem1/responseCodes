@@ -14,11 +14,18 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UnitTests {
+public class UnitTests extends BaseUnitTest {
 
-    private ResponseService service = new ResponseServiceImpl(new ResponseDAOImpl());
+    private ResponseService service = new ResponseServiceImpl(new ResponseDAOImpl("jdbc:hsqldb:mem:testcase;shutdown=true", "sa", null));
     private Faker faker = new Faker();
 
+    static {
+        try {
+            Class.forName("org.hsqldb.jdbcDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @ParameterizedTest
     @EnumSource(Methods.class)

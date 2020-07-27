@@ -12,35 +12,30 @@ import java.util.regex.Pattern;
 
 import static java.util.Arrays.asList;
 
-public class ValidationResult {
+public class ValidationResult {  //todo change class logic
 
     private static final Logger logger = LoggerFactory.getLogger(ValidationResult.class);
 
 
     private static Result isMethodValid(ResponseDTO responseDTO) {
-        Result result;
         try {
             Methods.valueOf(responseDTO.getMethod());
-            result = new Result(true, Optional.empty());
+            return new Result(true, Optional.empty());
         } catch (IllegalArgumentException ex) {
             logger.error(ex.getMessage());
-            result = new Result(false, Optional.of("Provided method is invalid"));
+            return new Result(false, Optional.of("Provided method is invalid"));
         }
-        return result;
     }
 
     private static Result isUrlValid(ResponseDTO responseDTO) {
-        Result result;
-        Pattern pattern = Pattern.compile("(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?");
+        Pattern pattern = Pattern.compile("(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?"); //todo move to utils ?? and add unit tests
         Matcher matcher = pattern.matcher(responseDTO.getUrl());
 
         if (responseDTO.getUrl().length() < 255 && matcher.find()) {
-            result = new Result(true, Optional.empty());
+            return new Result(true, Optional.empty());
         } else {
-            result = new Result(false, Optional.of("URL is not valid"));
+            return new Result(false, Optional.of("URL is not valid"));
         }
-
-        return result;
     }
 
     private static Result isBodyValid(ResponseDTO responseDTO) {

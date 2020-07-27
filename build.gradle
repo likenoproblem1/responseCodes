@@ -17,6 +17,8 @@ test {
 
 dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+    testRuntime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
     compile group: 'org.apache.tomcat.maven', name: 'tomcat7-maven-plugin', version: '2.2'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'

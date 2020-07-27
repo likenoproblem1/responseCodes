@@ -58,7 +58,7 @@ public class BehaviourControllerImpl extends HttpServlet implements BehaviourCon
             if (result.isSuccessful()) {
                 responseEntity = new ResponseEntity(HttpURLConnection.HTTP_OK, "OK");
             } else if (result.hasDuplicateEntry()) {
-                responseEntity = new ResponseEntity(HttpURLConnection.HTTP_CONFLICT, String.format("Record with url:%s and method:%s has duplicate entry", responseDTO.getUrl(), responseDTO.getMethod()));
+                responseEntity = new ResponseEntity(HttpURLConnection.HTTP_CONFLICT, String.format("Record with url:%s and method:%s has duplicate entry", responseDTO.getUrl(), responseDTO.getMethod())); //todo record not exist message
             } else {
                 responseEntity = new ResponseEntity(HttpURLConnection.HTTP_INTERNAL_ERROR, "INTERNAL ERROR \n" + result.getError().orElseThrow(() -> new Error("Unknown error")));
             }
@@ -77,7 +77,7 @@ public class BehaviourControllerImpl extends HttpServlet implements BehaviourCon
             OperationResult result = service.deleteResponse(responseDTO.getUrl(), responseDTO.getMethod());
             if (result.isSuccessful()) {
                 responseEntity = new ResponseEntity(HttpURLConnection.HTTP_NO_CONTENT, "No Content");
-            } else if (result.hasDuplicateEntry()) { // todo ???
+            } else if (result.hasDuplicateEntry()) { // todo record not exist???
                 responseEntity = new ResponseEntity(HttpURLConnection.HTTP_CONFLICT, String.format("Affected more than 1 record with url:%s and method:%s", responseDTO.getUrl(), responseDTO.getMethod()));
             } else {
                 responseEntity = new ResponseEntity(HttpURLConnection.HTTP_INTERNAL_ERROR, "INTERNAL ERROR \n" + result.getError().orElseThrow(() -> new Error("Unknown error")));

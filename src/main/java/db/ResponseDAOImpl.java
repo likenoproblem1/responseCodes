@@ -49,7 +49,7 @@ public class ResponseDAOImpl implements ResponseDAO {
                 operationResult = preparedStatement.executeUpdate() == 1 ? OperationResult.success() : OperationResult.duplicateEntry(); //todo test this with value 0
                 connection.commit();
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                logger.error(e.getMessage(), e);
                 operationResult = OperationResult.failed(e);
                     try {
                     connection.rollback();
@@ -59,7 +59,7 @@ public class ResponseDAOImpl implements ResponseDAO {
             }
             return operationResult;
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage(), e);
             return OperationResult.failed(e);
         }
     }
@@ -78,7 +78,7 @@ public class ResponseDAOImpl implements ResponseDAO {
                 operationResult = preparedStatement.executeUpdate() == 1 ? OperationResult.success() : OperationResult.duplicateEntry();
                 connection.commit();
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                logger.error(e.getMessage(), e);
                 operationResult = OperationResult.failed(e);
                 try {
                     connection.rollback();
@@ -102,7 +102,7 @@ public class ResponseDAOImpl implements ResponseDAO {
             try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_RESPONSE_QUERY)) {
                 preparedStatement.setString(1, url);
                 preparedStatement.setString(2, method.name());
-                operationResult = preparedStatement.executeUpdate() == 1 ? OperationResult.success() : OperationResult.duplicateEntry();
+                operationResult = preparedStatement.executeUpdate() == 1 ? OperationResult.success() : OperationResult.duplicateEntry(); //todo add result that record not found
                 connection.commit();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
@@ -110,7 +110,7 @@ public class ResponseDAOImpl implements ResponseDAO {
                 try {
                     connection.rollback();
                 } catch (Exception ex) {
-                    logger.error(ex.getMessage());
+                    logger.error(ex.getMessage(),e);
                 }
             }
             return operationResult;
